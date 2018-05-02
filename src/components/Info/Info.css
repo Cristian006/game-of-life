@@ -1,0 +1,20 @@
+.info-wrapper {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+  transition: all 100ms ease-in;
+  overflow: hidden;
+}
+
+.sub {
+  color: #45586f;
+}
+
+ol { counter-reset: item; }
+ol li { display: block; }
+ol li:before {
+    content: counter(item) ". ";
+    counter-increment: item;
+    color: #45586f;
+}

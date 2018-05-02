@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import Stat from './Stat';
-import GameOfLife from './GameOfLife';
-import Controls from './Controls';
+import Stat from '../Stat';
+import GameOfLife from '../GameOfLife';
+import Controls from '../Controls';
+import Info from '../Info';
 import './App.css';
+
 export default class App extends Component {
 	constructor() {
 		super();
@@ -12,7 +14,10 @@ export default class App extends Component {
 
 		this.state = {
 			generation: 0,
-			gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false)),
+			gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill({
+				active: false,
+				visited: false,
+			})),
 			paused: false,
       speedup: true,
       current: 0,
@@ -23,23 +28,25 @@ export default class App extends Component {
 
 	selectBox = (row, col) => {
 		let gridCopy = arrayClone(this.state.gridFull);
-		gridCopy[row][col] = !gridCopy[row][col];
+		gridCopy[row][col] = { active: true, visited: true };
 		this.setState({
 			gridFull: gridCopy,
+			current: this.state.current + 1,
 		});
 	}
 
 	seed = () => {
     let living = this.state.current;
 		let gridCopy = arrayClone(this.state.gridFull);
+
 		for (let i = 0; i < this.rows; i++) {
 			for (let j = 0; j < this.cols; j++) {
-				if (Math.floor(Math.random() * 4) === 1) {
-          gridCopy[i][j] = true;
+				if (Math.floor(Math.random() * 8) === 1) {
+          gridCopy[i][j] = { active: true, visited: true };
           living += 1;
 				}
 			}
-    }
+		}
 
 		this.setState({
       gridFull: gridCopy,
@@ -79,7 +86,10 @@ export default class App extends Component {
 	}
 
 	clear = () => {
-		var grid = Array(this.rows).fill().map(() => Array(this.cols).fill(false));
+		var grid = Array(this.rows).fill().map(() => Array(this.cols).fill({
+			active: false,
+			visited: false,
+		}));
 		this.setState({
 			gridFull: grid,
 			generation: 0,
@@ -116,21 +126,57 @@ export default class App extends Component {
 		for (let i = 0; i < this.rows; i++) {
 		  for (let j = 0; j < this.cols; j++) {
 		    let count = 0;
-		    if (i > 0) if (g[i - 1][j]) count++;
-		    if (i > 0 && j > 0) if (g[i - 1][j - 1]) count++;
-		    if (i > 0 && j < this.cols - 1) if (g[i - 1][j + 1]) count++;
-		    if (j < this.cols - 1) if (g[i][j + 1]) count++;
-		    if (j > 0) if (g[i][j - 1]) count++;
-		    if (i < this.rows - 1) if (g[i + 1][j]) count++;
-		    if (i < this.rows - 1 && j > 0) if (g[i + 1][j - 1]) count++;
-		    if (i < this.rows - 1 && this.cols - 1) if (g[i + 1][j + 1]) count++;
-		    if (g[i][j] && (count < 2 || count > 3)) {
-          g2[i][j] = false;
+				
+				// TOP
+				if (i > 0) {
+					if (g[i - 1][j].active) count++;
+				}
+
+				// TOP LEFT
+		    if (i > 0 && j > 0){
+					if (g[i - 1][j - 1].active) count++;
+				}
+
+				// TOP RIGHT
+		    if (i > 0 && j < this.cols - 1) {
+					if (g[i - 1][j + 1].active) count++;
+				}
+
+				// RIGHT
+		    if (j < this.cols - 1) {
+					if (g[i][j + 1].active) count++;
+				}
+
+				// LEFT
+				if (j > 0) {
+					if (g[i][j - 1].active) count++;
+				}
+
+				// BOTTOM
+		    if (i < this.rows - 1) {
+					if (g[i + 1][j].active) count++;
+				}
+
+				// BOTTOM LEFT
+		    if (i < this.rows - 1 && j > 0) {
+					if (g[i + 1][j - 1].active) count++;
+				}
+
+				// BOTTOM RIGHT
+		    if (i < (this.rows - 1) && j < (this.cols - 1)) {
+					if (g[i + 1][j + 1].active) count++;
+				}
+
+				// DIE
+		    if (g[i][j].active && (count < 2 || count > 3)) {
+          g2[i][j] = { active: false, visited: true };
           dying += 1;
           living -= 1;
-        }
-		    if (!g[i][j] && count === 3) {
-          g2[i][j] = true;
+				}
+
+				// LIVE
+		    if (!g[i][j].active && count === 3) {
+					g2[i][j] = { active: true, visited: true };
           living += 1;
         }
 		  }
@@ -177,11 +223,13 @@ export default class App extends Component {
 					cols={this.cols}
 					selectBox={this.selectBox}
 				/>
+				<Info />
 			</div>
 		);
 	}
 }
 
 function arrayClone(arr) {
+	//return arr.slice(0);
 	return JSON.parse(JSON.stringify(arr));
 }

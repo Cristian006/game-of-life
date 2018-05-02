@@ -2,7 +2,6 @@ body {
   background: #1e2630;
   color: #323f4f;
   font-family: 'Dosis', sans-serif;
-  overflow: hidden;
 }
 
 ::selection {
@@ -11,8 +10,7 @@ body {
 }
 
 .box {
-  display: inline-block;       
-  /*border: 1px solid black;*/
+  display: inline-block;
   width: 15px;
   height: 15px;
   margin-left: -1px;
@@ -22,17 +20,16 @@ body {
   user-select: none;
 }
 
-/*
-  color1 : [ 30, 38, 48 ],
-  color2 : [ 251, 53, 80 ]
-*/
-
 .off {
   background-color: #2b82b8;
 }
 
 .on {
   background-color: #fb3550;
+}
+
+.visited {
+  background-color: rgba(251, 53, 80, 0.3);
 }
   
 .box:hover { 
@@ -70,8 +67,9 @@ button:hover {
 .grid {
   width: 150px;
   line-height: 0;
-  margin: auto;
+  margin: 0 auto;
   margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .title {

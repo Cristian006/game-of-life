@@ -1,12 +1,12 @@
 import React from 'react';
 
-class Entity extends React.Component {
+class Cell extends React.Component {
 	selectBox = () => {
 		this.props.selectBox(this.props.row, this.props.col);
 	}
 
 	dragOverBox = (e) => {
-		if(e.buttons == 1)
+		if(e.buttons === 1)
 			this.props.selectBox(this.props.row, this.props.col);
 	}
 
@@ -17,9 +17,12 @@ class Entity extends React.Component {
 				id={this.props.id}
 				onClick={this.selectBox}
 				onMouseMove={this.dragOverBox}
+				style={{
+					borderRadius: this.props.box ? '' : '50%',
+				}}
 			/>
 		);
 	}
 }
 
-export default Entity;
+export default Cell;

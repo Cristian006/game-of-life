@@ -1,5 +1,5 @@
 import React from 'react';
-import Entity from './Entity';
+import Cell from './Cell';
 
 class GameOfLife extends React.Component {
 	render() {
@@ -11,9 +11,19 @@ class GameOfLife extends React.Component {
 			for (var j = 0; j < this.props.cols; j++) {
 				let boxId = i + "_" + j;
 
-				boxClass = this.props.gridFull[i][j] ? "box on" : "box";
+				if (this.props.gridFull[i][j].visited) {
+					if (this.props.gridFull[i][j].active) {
+						boxClass = "box on";
+					}
+					else {
+						boxClass = "box visited";
+					}
+				} else {
+					boxClass = "box";
+				}
+
 				rowsArr.push(
-					<Entity
+					<Cell
 						boxClass={boxClass}
 						key={boxId}
 						boxId={boxId}
