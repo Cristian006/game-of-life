@@ -16,7 +16,8 @@ export default class App extends Component {
 			paused: false,
       speedup: true,
       current: 0,
-      deaths: 0,
+			deaths: 0,
+			converged: false,
 		}
 	}
 
@@ -24,7 +25,7 @@ export default class App extends Component {
 		let gridCopy = arrayClone(this.state.gridFull);
 		gridCopy[row][col] = !gridCopy[row][col];
 		this.setState({
-			gridFull: [...this.state.gridFull],
+			gridFull: gridCopy,
 		});
 	}
 
@@ -108,8 +109,9 @@ export default class App extends Component {
 	play = () => {
 		let g = this.state.gridFull;
     let g2 = arrayClone(this.state.gridFull);
-    let living = this.state.current;
-    let dying = this.state.deaths;
+		let living = this.state.current;
+		let last = this.state.current;
+		let dying = this.state.deaths;
 
 		for (let i = 0; i < this.rows; i++) {
 		  for (let j = 0; j < this.cols; j++) {
@@ -132,13 +134,14 @@ export default class App extends Component {
           living += 1;
         }
 		  }
-    }
+		}
     
 		this.setState({
 		  gridFull: g2,
       generation: this.state.generation + 1,
       current: living,
-      deaths: dying
+			deaths: dying,
+			converged: last === living,
 		});
 	}
 
@@ -166,6 +169,7 @@ export default class App extends Component {
           <Stat label="Generation" stat={this.state.generation} />
           <Stat label="Entities" stat={this.state.current} />
           <Stat label="Deaths" stat={this.state.deaths} />
+          <Stat label="Converged" stat={this.state.converged.toString()} highlight={this.state.converged} />
         </div>
 				<GameOfLife
 					gridFull={this.state.gridFull}

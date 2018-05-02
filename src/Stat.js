@@ -20,7 +20,7 @@ export default class Stat extends Component {
     return (
       <div className="wrapper">
         <h2 className="label">{this.format(this.props.label)}</h2>
-        <h2 className="stat">{this.format(this.props.stat)}</h2>
+        <h2 className={this.props.highlight ? "stat highlight" : "stat"}>{this.format(this.props.stat)}</h2>
       </div>
     );
   }

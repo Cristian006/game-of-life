@@ -19,6 +19,7 @@ body {
   margin-bottom: -1px;
   transition: all 500ms ease-out;
   cursor: pointer;
+  user-select: none;
 }
 
 /*
