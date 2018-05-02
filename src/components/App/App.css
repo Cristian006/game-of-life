@@ -2,6 +2,7 @@ body {
   background: #1e2630;
   color: #323f4f;
   font-family: 'Dosis', sans-serif;
+  overflow-x: hidden;
 }
 
 ::selection {
@@ -47,7 +48,14 @@ body {
 
 .spacing {
   justify-content: space-around;
-  max-width: 80%;
+  max-width: 65%;
+}
+
+@media only screen and (max-width: 600px) {
+  .spacing {
+    flex-direction: column;
+    max-width: 100%;
+  }
 }
 
 button {
