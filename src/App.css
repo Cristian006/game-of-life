@@ -1,5 +1,6 @@
 body {
   background: #1e2630;
+  color: #323f4f;
   font-family: 'Dosis', sans-serif;
 }
 
@@ -45,6 +46,11 @@ body {
   align-content: center;
 }
 
+.spacing {
+  justify-content: space-around;
+  max-width: 80%;
+}
+
 button {
   user-select: none;
   background: transparent;
@@ -65,24 +71,9 @@ button:hover {
   margin: auto;
   margin-top: 40px;
 }
-  
-h1, h2, h3, h4 {
-  color: #323f4f;
-  margin: auto;
-  text-align: center;
-  width: 50%;
-}
 
-h4 {
-  margin-top: 0px;
-}
-
-.generations,
 .title {
-  margin-top: 10px;
   color: #45586f;
-}
-
-.title {
   margin-top: 30px;
+  text-align: center;
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Stat from './Stat';
 import GameOfLife from './GameOfLife';
 import Controls from './Controls';
 import './App.css';
@@ -13,7 +14,9 @@ export default class App extends Component {
 			generation: 0,
 			gridFull: Array(this.rows).fill().map(() => Array(this.cols).fill(false)),
 			paused: false,
-			speedup: true,
+      speedup: true,
+      current: 0,
+      deaths: 0,
 		}
 	}
 
@@ -26,16 +29,20 @@ export default class App extends Component {
 	}
 
 	seed = () => {
+    let living = this.state.current;
 		let gridCopy = arrayClone(this.state.gridFull);
 		for (let i = 0; i < this.rows; i++) {
 			for (let j = 0; j < this.cols; j++) {
 				if (Math.floor(Math.random() * 4) === 1) {
-					gridCopy[i][j] = true;
+          gridCopy[i][j] = true;
+          living += 1;
 				}
 			}
-		}
+    }
+
 		this.setState({
-			gridFull: gridCopy
+      gridFull: gridCopy,
+      current: living,
 		});
 	}
 
@@ -98,7 +105,9 @@ export default class App extends Component {
 
 	play = () => {
 		let g = this.state.gridFull;
-		let g2 = arrayClone(this.state.gridFull);
+    let g2 = arrayClone(this.state.gridFull);
+    let living = this.state.current;
+    let dying = this.state.deaths;
 
 		for (let i = 0; i < this.rows; i++) {
 		  for (let j = 0; j < this.cols; j++) {
@@ -111,15 +120,24 @@ export default class App extends Component {
 		    if (i < this.rows - 1) if (g[i + 1][j]) count++;
 		    if (i < this.rows - 1 && j > 0) if (g[i + 1][j - 1]) count++;
 		    if (i < this.rows - 1 && this.cols - 1) if (g[i + 1][j + 1]) count++;
-		    if (g[i][j] && (count < 2 || count > 3)) g2[i][j] = false;
-		    if (!g[i][j] && count === 3) g2[i][j] = true;
+		    if (g[i][j] && (count < 2 || count > 3)) {
+          g2[i][j] = false;
+          dying += 1;
+          living -= 1;
+        }
+		    if (!g[i][j] && count === 3) {
+          g2[i][j] = true;
+          living += 1;
+        }
 		  }
-		}
+    }
+    
 		this.setState({
 		  gridFull: g2,
-		  generation: this.state.generation + 1
+      generation: this.state.generation + 1,
+      current: living,
+      deaths: dying
 		});
-
 	}
 
 	componentDidMount() {
@@ -142,8 +160,11 @@ export default class App extends Component {
 					seed={this.seed}
 					gridSize={this.gridSize}
 				/>
-				<h2>Generation</h2>
-				<h2><span className="generations">{this.state.generation}</span></h2>
+        <div className="center spacing">
+          <Stat label="Generation" stat={this.state.generation} />
+          <Stat label="Entities" stat={this.state.current} />
+          <Stat label="Deaths" stat={this.state.deaths} />
+        </div>
 				<GameOfLife
 					gridFull={this.state.gridFull}
 					rows={this.rows}
