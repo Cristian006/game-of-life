@@ -1,28 +1,88 @@
-.App {
+body {
+  background: #1e2630;
+  font-family: 'Dosis', sans-serif;
+}
+
+::selection {
+  background-color: white;
+  color: #fb3550;
+}
+
+.box {
+  display: inline-block;       
+  /*border: 1px solid black;*/
+  width: 15px;
+  height: 15px;
+  margin-left: -1px;
+  margin-bottom: -1px;
+  transition: all 100ms ease-in-out;
+  cursor: pointer;
+}
+
+/*
+  color1 : [ 30, 38, 48 ],
+  color2 : [ 251, 53, 80 ]
+*/
+
+.off {
+  background-color: #2b82b8;
+}
+
+.on {
+  background-color: #fb3550;
+}
+  
+.box:hover { 
+  background: #ff6883;
+}
+
+.center {
+  margin: 0 auto;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+button {
+  user-select: none;
+  background: transparent;
+  border: none;
+  padding: 1vw 1vw;
+  cursor: pointer;
+  color: #323f4f; /*#45586f;/*59718e;/*#92a4bb;*/
+  transition: all 200ms ease-in;
+}
+
+button:hover {
+  color: #fb3550;
+}
+
+.grid {
+  width: 150px;
+  line-height: 0;
+  margin: auto;
+  margin-top: 40px;
+}
+  
+h1, h2, h3, h4 {
+  color: #323f4f;
+  margin: auto;
   text-align: center;
+  width: 50%;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+h4 {
+  margin-top: 0px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.generations,
+.title {
+  margin-top: 10px;
+  color: #45586f;
 }
 
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.title {
+  margin-top: 30px;
 }

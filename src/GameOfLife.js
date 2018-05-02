@@ -1,46 +1,36 @@
-import React, { Component } from 'react';
-import * as THREE from 'three';
-import World from './World';
+import React from 'react';
+import Entity from './Entity';
 
-class GameOfLife extends Component {
-  constructor(props){
-    super(props);
+class GameOfLife extends React.Component {
+	render() {
+		const width = (this.props.cols * 14);
+		var rowsArr = [];
 
-    this.state = {
-      width: window.innerWidth,
-      height: window.innerHeight
-    }
-  }
+		var boxClass = "";
+		for (var i = 0; i < this.props.rows; i++) {
+			for (var j = 0; j < this.props.cols; j++) {
+				let boxId = i + "_" + j;
 
-  onWindowResize = () => {
-    this.setState({
-      width: window.innerWidth,
-      height: window.innerHeight
-    })
-  };
+				boxClass = this.props.gridFull[i][j] ? "box on" : "box";
+				rowsArr.push(
+					<Entity
+						boxClass={boxClass}
+						key={boxId}
+						boxId={boxId}
+						row={i}
+						col={j}
+						selectBox={this.props.selectBox}
+					/>
+				);
+			}
+		}
 
-  componentDidMount(){
-    window.addEventListener('resize', this.onWindowResize);
-  }
-
-  componentWillUnMount(){
-    window.removeEventListener('resize', this.onWindowResize);
-  }
-
-
-  render() {
-    const {
-      width,
-      height
-    } = this.state;
-
-    return (
-      <World
-        width={width}
-        height={height}
-      />
-    );
-  }
+		return (
+			<div className="grid" style={{width: width}}>
+				{rowsArr}
+			</div>
+		);
+	}
 }
 
 export default GameOfLife;
