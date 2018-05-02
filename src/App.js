@@ -7,8 +7,8 @@ export default class App extends Component {
 	constructor() {
 		super();
 		this.speed = 100;
-		this.rows = 30;
-		this.cols = 50;
+		this.rows = 45;
+		this.cols = 60;
 
 		this.state = {
 			generation: 0,
@@ -24,7 +24,7 @@ export default class App extends Component {
 		let gridCopy = arrayClone(this.state.gridFull);
 		gridCopy[row][col] = !gridCopy[row][col];
 		this.setState({
-			gridFull: gridCopy
+			gridFull: [...this.state.gridFull],
 		});
 	}
 
@@ -81,7 +81,9 @@ export default class App extends Component {
 		var grid = Array(this.rows).fill().map(() => Array(this.cols).fill(false));
 		this.setState({
 			gridFull: grid,
-			generation: 0
+			generation: 0,
+			current: 0,
+			deaths: 0
 		});
 	}
 

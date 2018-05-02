@@ -2,6 +2,7 @@ body {
   background: #1e2630;
   color: #323f4f;
   font-family: 'Dosis', sans-serif;
+  overflow: hidden;
 }
 
 ::selection {
@@ -16,7 +17,7 @@ body {
   height: 15px;
   margin-left: -1px;
   margin-bottom: -1px;
-  transition: all 100ms ease-in-out;
+  transition: all 500ms ease-out;
   cursor: pointer;
 }
 
