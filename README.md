@@ -2,6 +2,10 @@
 
 > GUI &amp; Graphics Final Project. React App implementing Conway's Game of Life using three.js.
 
+## DEMO
+
+http://gol.crispcrafts.com
+
 ## The Game
 
 The game's theory is based on cellular automation abiding by four simple rules that govern each entity's replication and destruction.
