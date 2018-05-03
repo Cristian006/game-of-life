@@ -39,3 +39,8 @@ Any dead cell with exactly three live neighbors becomes a live cell
 ### React
 
 It's not at all necessary to use the react library, it's really just preference because of how clean and readable it keeps my code by splitting everything up into separate components while still being able to use three.js.
+
+### Three JS
+
+three js implementation: 
+https://github.com/Cristian006/game-of-life/tree/threejs
